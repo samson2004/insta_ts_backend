@@ -30,7 +30,7 @@ if(!fs.existsSync(uploadDir)){
 }
 
 
-const mongourl=process.env.MONGO_DB_URL
+const mongourl=process.env.MONGO_DB_URL||'mongodb+srv://dbusername:dbpassword@instaclonedb.dnltgqi.mongodb.net/?retryWrites=true&w=majority&appName=instaclonedb'
 if(!mongourl){
     console.error('mongourl not defined');
     process.exit(1)
