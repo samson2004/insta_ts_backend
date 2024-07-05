@@ -28,7 +28,9 @@ const imageschema = new mongoose_1.Schema({
     filename: { type: String, required: true },
     path: { type: String, required: true },
     minetype: { type: String, required: true },
-    size: { type: Number, required: true }
+    size: { type: Number, required: true },
+    createdAt: { type: Date, default: Date.now },
+    image: { data: Buffer, contentType: String },
 });
 const imagemodel = mongoose_1.default.model('imagemodel', imageschema);
 exports.default = imagemodel;

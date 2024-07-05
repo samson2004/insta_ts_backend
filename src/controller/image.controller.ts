@@ -3,16 +3,20 @@ import imagemodel from "../database/models/image.model";
 import { createImageRepo, getImageRepo } from "../repository/image.repository";
 import { Iimageinterface } from "../database/interface/image.interface";
 import path from "path";
+import { error } from "console";
+import { GridFSBucket, GridFSBucketReadStream } from "mongodb";
 
 
 export const uploadImageController=async(req:Request,res:Response)=>{
     const file=req.file;
+    const allowedminetype=['image/jpg','image/png','image/gif']
     console.log(file?.originalname)
     if(file){
         try {
             const savedimage=await createImageRepo({
                 filename:file.filename,
                 path:file.path,
+                image:{data:file.filename,contentType:'image/jpg'},
                 minetype:file.mimetype,
                 size:file.size
             });
@@ -40,12 +44,10 @@ export const  getImageController=async(req:Request,res:Response)=>{
     try {
         const image=await getImageRepo(imageid);
         if(image){
-        
-            res.sendFile(image.path)
-          
-            res.status(200).json({"data":
-                image
-            });
+            const imagepath=path.resolve(image.path)
+            const readstream=GridFSBucketReadStream.FILE
+            // res.sendFile(imagepath)
+            // res.status(200).json({"data":image});
             }
         else{
             res.status(400).json({"data":"image not found"})
