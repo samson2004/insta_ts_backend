@@ -53,6 +53,7 @@ const getImageController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const image = yield (0, image_repository_1.getImageRepo)(imageid);
         if (image) {
             const imagepath = path_1.default.resolve(image.path);
+            // const readstream=GridFSBucketReadStream.FILE
             res.sendFile(imagepath);
             res.status(200).json({ "data": image });
         }

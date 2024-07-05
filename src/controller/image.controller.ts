@@ -45,9 +45,9 @@ export const  getImageController=async(req:Request,res:Response)=>{
         const image=await getImageRepo(imageid);
         if(image){
             const imagepath=path.resolve(image.path)
-            const readstream=GridFSBucketReadStream.FILE
-            // res.sendFile(imagepath)
-            // res.status(200).json({"data":image});
+            // const readstream=GridFSBucketReadStream.FILE
+            res.sendFile(imagepath)
+            res.status(200).json({"data":image});
             }
         else{
             res.status(400).json({"data":"image not found"})
