@@ -7,6 +7,8 @@ import mongoose from "mongoose";
 import router from "./routes/route";
 import path from "path";
 import fs from "fs";
+import { GridFSBucket, MongoClient } from "mongodb";
+import imagemodel from "./database/models/image.model";
 const app:Express=express();
 const server =http.createServer(app);
 
@@ -20,8 +22,9 @@ dotenv.config()
 
 
 
+
 const uploadDir=path.join(__dirname,'../uploads');
-app.use('/uploads', express.static(uploadDir));
+app.use('/uploads', express.static('C:/Users/SAM/Desktop/ts_insta_backend/uploads'));
 
 app.use("/api/insta/v1",router)
 
@@ -35,12 +38,23 @@ if(!mongourl){
     console.error('mongourl not defined');
     process.exit(1)
 }
-mongoose.connect(mongourl,{enableUtf8Validation: false}).then(()=>{
+mongoose.connect(mongourl,{enableUtf8Validation: false}).then(async()=>{
     console.log("connected to mongodb")
+
+    const client=new MongoClient(mongourl);
+    await client.connect();
+    console.log('client is connected');
+    const db=client.db();
+    const bucket=new GridFSBucket(db);
+
+    app.locals.bucket=bucket;
+
+
 }).catch((error)=>{
     console.log(error)
     console.log("Error in connection with mongodb")
 })
+
 
 
 //start server

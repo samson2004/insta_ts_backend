@@ -27,7 +27,7 @@ const storage=multer.diskStorage({
 // };
 // ,fileFilter:filefilter
 
-console.log("using multer ")
+console.log("using multer diskstorage ")
 const upload=multer({storage:storage});
 
 export default upload;

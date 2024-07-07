@@ -28,6 +28,6 @@ const storage = multer_1.default.diskStorage({
 //     }
 // };
 // ,fileFilter:filefilter
-console.log("using multer ");
+console.log("using multer diskstorage ");
 const upload = (0, multer_1.default)({ storage: storage });
 exports.default = upload;
