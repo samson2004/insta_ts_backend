@@ -39,13 +39,12 @@ export const uploadImageController=async(req:Request,res:Response)=>{
     }
 }
 
-export const  getImageController=async(req:Request,res:Response)=>{
+export const  getdetailedImageController=async(req:Request,res:Response)=>{
     const imageid=req.params.id as string;
     try {
         const image=await getImageRepo(imageid);
         if(image){
             const imagepath=path.resolve(image.path)
-            // const readstream=GridFSBucketReadStream.FILE
             res.sendFile(imagepath)
             res.status(200).json({"data":image});
             }
@@ -56,3 +55,19 @@ export const  getImageController=async(req:Request,res:Response)=>{
         res.status(500).json({"data":"Image not found"})
     }
 }
+
+export const geturlImageController = async (req: Request, res: Response) => {
+    const imageid = req.params.id as string;
+    try {
+        const image = await getImageRepo(imageid);
+        if (image) {
+            const imagepath = path.resolve(image.filename);
+            const filename=image.filename;
+            console.log(filename)
+            res.sendFile(imagepath);
+            res.status(200).json({"url": `http://localhost:3000/uploads/${filename}`});
+        }
+    } catch (error) {
+        res.status(500).json({"data":"Image not found"});
+    }
+};

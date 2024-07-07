@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getImageController = exports.uploadImageController = void 0;
+exports.geturlImageController = exports.getdetailedImageController = exports.uploadImageController = void 0;
 const image_repository_1 = require("../repository/image.repository");
 const path_1 = __importDefault(require("path"));
 const uploadImageController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,13 +47,12 @@ const uploadImageController = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.uploadImageController = uploadImageController;
-const getImageController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getdetailedImageController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const imageid = req.params.id;
     try {
         const image = yield (0, image_repository_1.getImageRepo)(imageid);
         if (image) {
             const imagepath = path_1.default.resolve(image.path);
-            // const readstream=GridFSBucketReadStream.FILE
             res.sendFile(imagepath);
             res.status(200).json({ "data": image });
         }
@@ -65,4 +64,21 @@ const getImageController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(500).json({ "data": "Image not found" });
     }
 });
-exports.getImageController = getImageController;
+exports.getdetailedImageController = getdetailedImageController;
+const geturlImageController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const imageid = req.params.id;
+    try {
+        const image = yield (0, image_repository_1.getImageRepo)(imageid);
+        if (image) {
+            const imagepath = path_1.default.resolve(image.filename);
+            const filename = image.filename;
+            console.log(filename);
+            res.sendFile(imagepath);
+            res.status(200).json({ "url": `http://localhost:3000/uploads/${filename}` });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ "data": "Image not found" });
+    }
+});
+exports.geturlImageController = geturlImageController;

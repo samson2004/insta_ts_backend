@@ -8,5 +8,6 @@ const multerdiskstorage_middleware_1 = __importDefault(require("../middleware/mu
 const image_controller_1 = require("../controller/image.controller");
 const uploadrouter = (0, express_1.Router)();
 uploadrouter.post('/upload', multerdiskstorage_middleware_1.default.single('image'), image_controller_1.uploadImageController);
-uploadrouter.get('/:id', image_controller_1.getImageController);
+uploadrouter.get('/detail/:id', image_controller_1.getdetailedImageController); // not in use
+uploadrouter.get('/:id', image_controller_1.geturlImageController);
 exports.default = uploadrouter;
