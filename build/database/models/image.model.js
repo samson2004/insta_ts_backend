@@ -31,6 +31,10 @@ const imageschema = new mongoose_1.Schema({
     size: { type: Number, required: true },
     createdAt: { type: Date, default: Date.now },
     image: { data: Buffer, contentType: String },
+    title: { type: String, required: false },
+    content: { type: String, required: false },
+    likes: { type: [String], default: [], required: false },
+    uploadedAt: { type: String, required: true }
 });
 const imagemodel = mongoose_1.default.model('imagemodel', imageschema);
 exports.default = imagemodel;

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getImageRepo = exports.createImageRepo = void 0;
+exports.deleteImageRepo = exports.getImageRepo = exports.createImageRepo = void 0;
 const image_model_1 = __importDefault(require("../database/models/image.model"));
 const createImageRepo = (image) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -35,3 +35,19 @@ const getImageRepo = (id) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getImageRepo = getImageRepo;
+const deleteImageRepo = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const deleted = yield image_model_1.default.findOneAndDelete({ _id: _id });
+        if (deleted) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    catch (error) {
+        console.error('Error in deleting imagemodel', error);
+        return false;
+    }
+});
+exports.deleteImageRepo = deleteImageRepo;

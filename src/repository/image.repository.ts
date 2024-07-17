@@ -20,3 +20,18 @@ export const getImageRepo=async(id:string):Promise<Iimageinterface| null>=>{
         return null;
     }
 }
+
+export const deleteImageRepo=async(_id:String):Promise<boolean>=>{
+    try {
+        const deleted=await imagemodel.findOneAndDelete({_id:_id});
+        if (deleted) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    } catch (error) {
+        console.error('Error in deleting imagemodel',error)
+        return false;
+    }
+}
